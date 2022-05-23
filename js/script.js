@@ -79,13 +79,6 @@
         'Required at least one number (0-9), uppercase and lowercase letters (a-Z) and at least one special character (!@#$%^&*-)'
       ),
     ],
-    password2: [
-      checkRegExp.bind(
-        null,
-        /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\!\@\#\$\%\^\&\*\-])/,
-        'Must be equale to password'
-      ),
-    ],
     zip: [
       checkRegExp.bind(
         null,
@@ -96,11 +89,11 @@
   };
 
   function validateField(element) {
-    console.log('element', validations[element.id]);
-
     var fieldValidation = validations[element.id];
-
     var result = { valid: true, element: element, message: '' };
+
+    console.log('validations', fieldValidation);
+
     if (fieldValidation) {
       for (var i = 0, len = fieldValidation.length; i < len; i++) {
         var validationFunction = fieldValidation[i];
@@ -114,6 +107,7 @@
         }
       }
     }
+    console.log('result', result);
     return result;
   }
 
@@ -130,8 +124,15 @@
     errorMessageElement && !message && (errorMessageElement.innerHTML = '');
   }
   function formOnchange(e) {
+    var firstPassword = document.getElementById('password');
+    var secondPassword = document.getElementById('password2');
+
     if (e.target.dataset && e.target.dataset.validation !== undefined) {
       toggleError(e.target, validateField(e.target).message);
+    }
+
+    if (firstPassword.value !== secondPassword.value) {
+      toggleError(secondPassword, 'Passwords must be equle');
     }
   }
 
