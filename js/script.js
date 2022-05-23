@@ -34,10 +34,6 @@
    * Validation
    * */
   function checkRegExp(pattern, message, value) {
-    // console.log('message', message);
-    // console.log('pattern', pattern);
-    // console.log('value', value);
-
     return pattern.test(value) ? true : message;
   }
 
@@ -99,12 +95,8 @@
     ],
   };
 
-  //   console.log('validations', validations.password2.value);
-
   function validateField(element) {
     console.log('element', validations[element.id]);
-    // console.log('element', element.id === 'password2');
-    // console.log('element', element.id === 'password');
 
     var fieldValidation = validations[element.id];
 
@@ -112,15 +104,9 @@
     if (fieldValidation) {
       for (var i = 0, len = fieldValidation.length; i < len; i++) {
         var validationFunction = fieldValidation[i];
-        console.log('i', fieldValidation[i]);
-        var answer = validationFunction(element.value);
-        console.log('validationFunction', validationFunction);
-        console.log('element', element.value);
-        console.log('element', element.id === 'password');
 
-        // if (element.id === 'password2') {
-        //   console.log('elment.value', element.value);
-        // }
+        var answer = validationFunction(element.value);
+
         if (typeof answer === 'string') {
           result.valid = false;
           result.message = answer;
@@ -145,8 +131,6 @@
   }
   function formOnchange(e) {
     if (e.target.dataset && e.target.dataset.validation !== undefined) {
-      console.log('e.target', e.target.id.value);
-
       toggleError(e.target, validateField(e.target).message);
     }
   }
